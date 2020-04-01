@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd"> 
+	
+	
+	<!-- MyBatis中，Dao使用Mapper的动态代理，只有接口，没有实现类，  我们以前是自己创建SqlsessionFactory，Sqlsession，
+		 Spring框架整合其他框架，就是IoC的应用，Spring容器创建其他框架的核心类 -->
+	
+	<!-- 注册sqlSessionFactory，来源类是SqlSessionFactoryBean:相当于之前写的MyBatisUtil工具类，来源于mybatis-spring.jar包 -->
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 指定MyBatis主配置文件的位置，configLocation属性的值为工程项目路径下的mybatisconfig.xml文件下。 -->
+		<property name="configLocation" value="classpath:mybatisconfig.xml"/>
+		<!-- 指定数据源，目标对象在spring-db中 -->
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	
+	<!-- 配置DAO的实现类，扫描指定的包，将包中的接口都生成实现类 ,相当于调用getMapper(StuDao.class)-->	
+ 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
+		<!-- 扫描指定的包,生成实现类 -->
+ 		<property name="basePackage" value="com.chcpc.swaggerssm.dao"/>
+		<!-- 引入工厂id ，这里用value而不是ref是因为在源码中其数据类型为String，不属于引用类型 -->
+ 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+	</bean>  
+	
+</beans>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd"> 
+		
+	
+	
+	<!-- 使用C3P0的连接池 -->
+	<!-- 1. 使用ComboPooledDataSource这个类的driverClass等属性 -->
+	<!-- (1) driverClass-驱动类：jdbc.driver——com.mysql.jdbc.Driver -->
+	<!-- (2) jdbcUrl-数据库连接：jdbc.url——jdbc:mysql:///customers -->
+	<!-- (3) user-用户名：jdbc.username——root -->
+	<!-- (4) password-密码：jdbc.password——123456 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="user" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+	</bean>
+	
+	<!-- 2. 参数配置信息 -->
+	<!-- 环境配置：属性-占位符  路径="工程项目目录下:"-->
+	<context:property-placeholder location="classpath:mysqljdbc.properties"/>
+</beans>
+

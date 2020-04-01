@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+@CHARSET "UTF-8";
+	label {
+		display: block;
+		font-weight: 600;
+		background-color: #e3f2fd;
+		padding: 8px;
+		margin-bottom: 20px;
+		border-radius: 5px;
+	}
+	thead {
+		background-color: #DCDCDC;
+	}
+	input{
+		margin: 0px 5px;
+	}
+	select {
+		width: 100px;
+		height: 30px;
+		margin: 5px 5px;
+	}
+	ul {
+		padding: 0;
+		margin: 0;
+	}
+	a:hover {
+		text-decoration: none;
+	}
+	.main{
+		width: 80%;
+		margin: 0 auto;	
+		margin-top: 100px;
+	}
+	.selection {
+		overflow: hidden;
+		margin-bottom: 20px;
+	}
+	.inputs {
+		margin: 5px 5px;
+
+	}
+	.col-lg-2 {
+		margin: 5px 5px;
+	}
+	.notes {
+		display: inline-block;
+	}
+	.btn-primary {
+		border-radius: 5px;		
+	}
+	.btn-primary:hover {
+		cursor: pointer;
+	}
+	

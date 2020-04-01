@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 使用Mapper的动态代理：
+	1.没有Dao接口的实现类，映射文件放在接口所在的包中
+	2.命名空间namesapce,必须是接口的全限定名
+	3.sql语句的id必须是要调用的方法名
+	Mapper动态代理自动生成的代码，查询操作底层只会调用selectone() 或selectList() ，不会调用selectMap()
+	 -->
+	
+<!-- 映射文件，存储SQL语句 -->
+ 
+<mapper namespace="com.woniuxy.dao.CustomerDao">
+	<!-- 查询用户数量，返回值类型为int -->
+	 <select id="selectCustomersConditionByPageTotalRecored" resultType="int">
+	 	select count(*) from customer
+	 	<!-- 通过include标签将外部标签引入 -->
+	 	<include refid="sqlCondition"></include>
+	 </select>
+	 <!-- sql标签，专门用于存储sql语句，有id属性，可以被其他标签调用(通过include标签refid属性) -->
+	 <sql id="sqlCondition">
+	 	<where>
+	 		<if test="customer.cname!=null and customer.cname!=''">
+	 			and cname like '%' #{customer.cname} '%'
+	 		</if>
+	 		<if test="customer.gender!=null and customer.gender!=''">
+	 			and gender=#{customer.gender}
+	 		</if>
+	 		<if test="customer.cellphone!=null and customer.cellphone!=''">
+	 			and cellphone like '%' #{customer.cellphone} '%'
+	 		</if>
+	 		<if test="customer.email!=null and customer.email!=''">
+	 			and email like '%' #{customer.email} '%'
+	 		</if>
+	 	</where>
+	 </sql>
+	 <!-- 查询用户信息的List，返回值类型为Customer，然后框架会自动组装为List -->
+	 <select id="selectCustomersConditionByPage" resultType="Customer">
+		select * from customer
+		<!-- 通过include标签将外部标签引入 -->
+		<include refid="sqlCondition"></include>
+		<!-- 通过Dao方法参数中@Param("pageIndex")int pageIndex, @Param("pageSize") int pageSize传入 -->
+		limit #{pageIndex},#{pageSize};
+	 </select>
+	 
+	 <delete id="deleteCustomerByCid">
+	 	DELETE FROM customer WHERE cid=#{cid}
+	 </delete>
+	 <select id="getCustomerByCid" resultType="Customer">
+	 	select * from customer WHERE cid=#{cid}
+	 </select>
+	 <update id="updateCustomer">	 
+		update customer set cname=#{customer.cname},gender=#{customer.gender},birthday=#{customer.birthday},cellphone=#{customer.cellphone},email=#{customer.email},description=#{customer.description} WHERE cid=#{customer.cid} 
+	 </update>
+</mapper>

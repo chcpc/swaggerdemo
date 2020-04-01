@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	<!-- 映射文件 -->
+<configuration>
+	
+	<typeAliases>
+		<!-- 指定包中的所有类都使用类名作为别名，代替权限限定名 -->
+		<package name="com.chcpc.swaggerssm.entity"/>
+	</typeAliases>
+	
+	<mappers>
+		<!-- 在主配置文件中，关联映射文件，使用相对路径 -->
+		<!-- 指定导入指定包中的所有的映射文件：映射文件的名字必须和接口的名字相同 -->
+		<package name="com.chcpc.swaggerssm.dao"/>
+	</mappers>
+	
+</configuration>
